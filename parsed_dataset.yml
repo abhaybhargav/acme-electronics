@@ -1,0 +1,16 @@
+objectType: Feature
+name: parse_uploaded_resumes
+description: As a hiring manager of Acme, I would like to view datasets with parsed versions of resumés with specific highlighted keywords for me to be able to filter the candidates appropriately
+abuse_cases:
+  - name: manipulating parser
+    description: As a malicious candidate I would like to manipulate the parser process so I can get selected
+    threat_scenarios:
+    - name: code injection upload file parser manipulate
+      type: repo
+      description: Perform code injection through uploaded file that gives me shell and reverse-shell on the hiring system and priv-esc from there
+      reference: {name: code_injection, severity: 3}
+
+    - name: xxe docx-pdf upload parser manipulate
+      type: repo
+      description: Attempt to gain RCE through XML External Entities, by uploading a file laced with XML payloads and malware
+      reference: {name: xxe, severity: 3}

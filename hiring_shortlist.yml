@@ -1,0 +1,37 @@
+objectType: Feature
+name: hiring_manager_shortlist
+description: As a hiring manager of Acme, I would like to shortlist candidates within the the Acme HRMS system, which will automatically send them a templated email to appear for a virtual interview on a particular date and time.
+abuse_cases:
+  - name: manipulate hiring action
+    description: As a malicious candidate I would like to manipulate the hiring action that's performed by the Hiring Manager
+    threat_scenarios:
+    - name: persistent xss admin user hiring action
+      type: repo
+      description: Load XSS Payloads that persist in the database and trigger whenever an administrative user accesses the record. This leads to Priv-Esc to Admin Account
+      reference: {name: xss, severity: 2}
+    - name: server-side template injection hiring action
+      type: repo
+      description: load input with SSTI payloads and attempt to trigger RCE, and priv-esc from there
+      reference: {name: code_injection, severity: 3}
+    - name: csrf hiring manager manipulate
+      description: As a malicious candidate I will attempt to trigger CSRF Attacks against the manager through Soc-Eng payloads and get the manager to select me
+      type: inline
+      cwe: 352
+      severity: 1
+      test-cases:
+      - name: automated-testing
+        test: run automated vulnerability scanning tools and identify CSRF vulnerabilities against the application
+        type: discovery
+        tools: zap,burp
+      - name: manual-testing
+        test: manually test if CSRF payloads works against the hiring shortlist function
+        tools: manual
+        type: exploit
+      - name: audit token implementation
+        test: identify presence and implementation of csrf tokens generated
+        type: manual
+        tools: manual
+      - name: static-analysis
+        test: identify the possible use of insecure Random Values to generate the csrf token
+        type: discovery
+        tools: spotbugs,xanitizer

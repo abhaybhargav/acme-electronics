@@ -1,0 +1,52 @@
+objectType: Feature
+name: create_upload_resume
+description: As a candidate for employment, I would like top upload my doc, docx, and pdf resumés along with basic information through Acme's hiring website, so I can get hired by Acme
+abuse_cases:
+  - name: manipulate hiring process
+    description: As a malicious candidate I would like to manipulate the hiring process so I can get selected
+    threat_scenarios:
+    - name: code injection upload file
+      type: repo
+      description: Perform code injection through uploaded file that gives me shell and reverse-shell on the hiring system and priv-esc from there
+      reference: {name: code_injection, severity: 3}
+
+    - name: persistent xss admin user
+      type: repo
+      description: Load XSS Payloads that persist in the database and trigger whenever an administrative user accesses the record. This leads to Priv-Esc to Admin Account
+      reference: {name: xss, severity: 2}
+
+    - name: xxe docx-pdf upload
+      type: repo
+      description: Attempt to gain RCE through XML External Entities, by uploading a file laced with XML payloads and malware
+      reference: {name: xxe, severity: 3}
+  
+  - name: access sensitive data
+    description: As a malicious applicant I want to steal sensitive info like credit cards etc from Acme's internal network 
+    threat_scenarios:
+    - name: code injection upload file sensitive data
+      type: repo
+      description: Perform code injection through uploaded file that gives me shell and reverse-shell on the hiring system and priv-esc from there
+      reference: {name: code_injection, severity: 3}
+
+    - name: persistent xss admin user sensitive data
+      type: repo
+      description: Load XSS Payloads that persist in the database and trigger whenever an administrative user accesses the record. This leads to Priv-Esc to Admin Account
+      reference: {name: xss, severity: 2}
+
+    - name: xxe docx-pdf upload sensitive data
+      type: repo
+      description: Attempt to gain RCE through XML External Entities, by uploading a file laced with XML payloads and malware
+      reference: {name: xxe, severity: 3}
+    
+  - name: denial of service by deleting candidate data
+    description: As a malicious candidate I want to delete other candidate information from Acme's systems
+    threat_scenarios:
+    - name: code injection upload file delete data
+      type: repo
+      description: Perform code injection through uploaded file that gives me shell and reverse-shell on the hiring system and priv-esc from there
+      reference: {name: code_injection, severity: 3}
+
+    - name: xxe docx-pdf upload delete data
+      type: repo
+      description: Attempt to gain RCE through XML External Entities, by uploading a file laced with XML payloads and malware
+      reference: {name: xxe, severity: 3}
